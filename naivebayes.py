@@ -21,15 +21,15 @@ def test(probs, priors, valimg, vallab):
         log_probs[:, i]=np.log(priors[i]) + log_likelihood #representing log probabilities of this number, for each image (no need to worry about the denominator of bayes's theorem since it doesn't affect maxes)
     preds=np.argmax(log_probs, axis=1) #number with highest prob for each image
     accuracy=np.mean(preds==vallab) * 100
-    print(f'Predictions were {accuracy}% accurate.')
+    return accuracy
 
 
-def run_naive_bayes():
+def run_default():
     trainimg, trainlab, valimg, vallab = base.get_sets(0.2)
     trainimg=trainimg>0.5 #binarize each pixel
     valimg=valimg>0.5
     probs, priors = train(trainimg, trainlab) #probs is prob of each pixel being 1 for each number, priors is prob of each number in general
-    test(probs, priors, valimg, vallab)
+    return test(probs, priors, valimg, vallab)
 
-run_naive_bayes()
+print(f'Naive Bayes Accuracy: {run_default()}%')
 

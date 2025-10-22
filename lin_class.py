@@ -11,9 +11,12 @@ class LinClass(nn.Module):
         x=x.view(x.size(0), -1) #flatten the images
         return self.fc(x) #do a pass through the layer
     
-    def run_default(self):
-        tb.run(self, 10, nn.MSELoss(), 0.01, 0)
+    def run_model_default(self):
+        return tb.run(self, 10, nn.MSELoss(), 0.01, 0)
     
-    
-model=LinClass()
-model.run_default()
+
+def run_default():
+    model=LinClass()
+    return model.run_model_default()
+
+print(f'Linear Classifier Accuracy: {LinClass().run_default()}%')

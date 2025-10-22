@@ -43,9 +43,9 @@ def test(model, test_loader):
             total+=labels.size(0) #add size of current batch to total
             correct+=(predicted==labels).sum().item() #add number of correct predictions
     correct_perc=100*(correct/total)
-    print(f"Accuracy: {correct_perc}%")
+    return correct_perc
 
 def run(model, epochs, lossfunc, lr, mom):
     train_loader, test_loader=load_data()
     train(model, train_loader, epochs, lossfunc, lr, mom)
-    test(model, test_loader)
+    return test(model, test_loader)

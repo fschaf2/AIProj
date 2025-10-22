@@ -7,7 +7,7 @@ def eucl_dist(factor1, factor2):
     dist = np.sqrt(sq_1 + sq_2 - 2 * factor1 @ factor2.T) #calculate euclidian distances using (a-b)^2=a^2+b^2-2ab for more efficient matrix operations
     return dist
 
-def do_knn(k):
+def run(k):
     batch_size=1000
     trainimg, trainlab, valimg, vallab = base.get_sets(0.2)
     ntrain=trainlab.shape[0]
@@ -39,6 +39,9 @@ def do_knn(k):
             lab_weights=np.array([weights[cur_neigh_lab==ul].sum() for ul in unique_labels]) #sum up weights for each neighbor digit
             preds[i+z]=unique_labels[np.argmax(lab_weights)] #make prediction and place it in overall prediction array
     accuracy=np.mean(preds==vallab) * 100
-    print(f'Predictions were {accuracy}% accurate.')
+    return accuracy
 
-do_knn(3)
+def run_default():
+    return run(3)
+
+print(f'K-Nearest Neighbor Accuracy: {run_default()}%')
