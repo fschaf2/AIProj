@@ -18,7 +18,7 @@ class MLP(nn.Module):
         return self.layers(x) #do a pass through the layer
     
     def run_default(self):
-        tb.run(self, 10, 0.01)
+        tb.run(self, 10, nn.CrossEntropyLoss(), 0.01, 0)
     
     
 

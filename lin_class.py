@@ -12,7 +12,7 @@ class LinClass(nn.Module):
         return self.fc(x) #do a pass through the layer
     
     def run_default(self):
-        tb.run(self, 10, 0.01)
+        tb.run(self, 10, nn.MSELoss(), 0.01, 0)
     
     
 model=LinClass()
