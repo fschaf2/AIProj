@@ -2,3 +2,4 @@ environ/
 /MNIST/
 __pycache__/
 *.pyc
+/data/
