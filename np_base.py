@@ -13,9 +13,17 @@ def load_images():
             labels.append(i)
     return np.array(images), np.array(labels)
 
+def load_images_with_caching():
+    if os.path.exists("mnist.npz"):
+        data=np.load("mnist.npz")
+        return data['images'], data['labels']
+    else:
+        images, labels = load_images()
+        np.savez_compressed("mnist.npz", images=images, labels=labels)
+        return images, labels
+
 def get_sets(valprop):
-    print("even started")
-    images, labels=load_images()
+    images, labels=load_images_with_caching()
     classes=np.unique(labels)
     trainimg, trainlab, valimg, vallab = [], [], [], []
     for c in classes:
@@ -41,3 +49,6 @@ def get_sets(valprop):
         valimg[val_perm],
         vallab[val_perm]
     )
+
+    
+
