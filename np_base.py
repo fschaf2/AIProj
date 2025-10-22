@@ -2,15 +2,19 @@ import numpy as np
 import os
 from PIL import Image
 import random
+import zipfile
+import re
 
 def load_images():
     images, labels = [], []
-    for i in range (10):
-        numpath=os.path.join('MNIST', str(i))
-        for file_name in os.listdir(numpath):
-            img=Image.open(os.path.join(numpath, file_name)).convert('L')
-            images.append(np.array(img, dtype=np.float32).reshape(-1)/255.0)
-            labels.append(i)
+    with zipfile.ZipFile('mnist.zip', 'r') as zippy:
+        for file_name in zippy.namelist():
+            with zippy.open(file_name) as file:
+                match=re.match(r'MNIST/(\d+)/.*\.png', file_name)
+                if match:
+                    img=Image.open(file).convert('L')
+                    images.append(np.array(img, dtype=np.float32).reshape(-1)/255.0)
+                    labels.append(int(match.group(1)))
     return np.array(images), np.array(labels)
 
 def load_images_with_caching():
@@ -51,4 +55,3 @@ def get_sets(valprop):
     )
 
     
-
