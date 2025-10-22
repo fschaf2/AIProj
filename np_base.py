@@ -7,7 +7,7 @@ import re
 
 def load_images():
     images, labels = [], []
-    with zipfile.ZipFile('mnist.zip', 'r') as zippy:
+    with zipfile.ZipFile('MNIST.zip', 'r') as zippy:
         for file_name in zippy.namelist():
             with zippy.open(file_name) as file:
                 match=re.match(r'MNIST/(\d+)/.*\.png', file_name)
