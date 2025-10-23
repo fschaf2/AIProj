@@ -5,7 +5,8 @@ import matplotlib.pyplot as plt
 
 #Naive Bayes
 
-
+#TERMINOLOGY USED: trainimg, trainlab=array of training images, array of training labels
+#valimg, vallab=array of validation images, array of validation labels
 
 #Create probability plot
 def plot_probs(probs):

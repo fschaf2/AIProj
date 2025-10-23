@@ -42,7 +42,7 @@ def load_images_with_caching():
         return images, labels
 
 
-#get image sets
+#get image sets (training and validation)
 #valprop-proportion to be included in validation set
 def get_sets(valprop):
     images, labels=load_images_with_caching()

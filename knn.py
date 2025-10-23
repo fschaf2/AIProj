@@ -8,11 +8,11 @@ import numpy as np
 #TERMINOLOGY USED: trainimg, trainlab=array of training images, array of training labels
 #valimg, vallab=array of validation images, array of validation labels
 
-#calculates euclidian distance between 2 numpy arrays
+#calculates euclidean distance between 2 numpy arrays
 def eucl_dist(factor1, factor2):
     sq_1=np.sum(factor1**2, axis=1, keepdims=True) #calculate sum of factors squared for each image. keepdims here to enable broadcasting
     sq_2=np.sum(factor2**2, axis=1)
-    dist = np.sqrt(sq_1 + sq_2 - 2 * factor1 @ factor2.T) #calculate euclidian distances using (a-b)^2=a^2+b^2-2ab for more efficient matrix operations
+    dist = np.sqrt(sq_1 + sq_2 - 2 * factor1 @ factor2.T) #calculate euclidean distances using (a-b)^2=a^2+b^2-2ab for more efficient matrix operations
     return dist
 
 
