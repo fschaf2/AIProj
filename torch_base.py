@@ -21,7 +21,7 @@ def load_data():
 def train(model, train_loader, epochs, lossfunc, lr, mom):
     optimizer=optim.SGD(model.parameters(), lr=lr, momentum=mom) #the optimizer performs gradient descent with learning rate 0.1
     for i in range(epochs):
-        print(f"epoch {i}")
+        #print(f"epoch {i}")
         for images, labels in train_loader:
             optimizer.zero_grad() #reset gradients
             outputs=model(images) #do a prediction

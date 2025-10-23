@@ -21,14 +21,13 @@ class CNN(nn.Module):
         x=x.view(x.size(0), -1)
         return self.fc(x)
     
-    def run_model_default(self):
-        return tb.run(self, 10, nn.CrossEntropyLoss(), 0.01, 0.9) #recommended settings for highest accuracy I've found
+        
     
 def run_default():
-    model=CNN()
-    return model.run_model_default()
+    return tb.run(CNN(), 10, nn.CrossEntropyLoss(), 0.01, 0.9) #recommended settings for highest accuracy I've found
 
-print(f'Convolutional Neural Net Accuracy: {run_default()}%')
+if __name__== "__main__":
+    print(f'Convolutional Neural Net Accuracy: {run_default()}%')
 
 
 

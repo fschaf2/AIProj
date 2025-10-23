@@ -17,14 +17,12 @@ class MLP(nn.Module):
         x=x.view(x.size(0), -1) #flatten the images
         return self.layers(x) #do a pass through the layer
     
-    def run_model_default(self):
-        return tb.run(self, 10, nn.CrossEntropyLoss(), 0.01, 0)
     
 def run_default():
-    model=MLP()
-    return model.run_model_default()
+    return tb.run(MLP(), 10, nn.CrossEntropyLoss(), 0.01, 0)
 
-print(f'Multilayer Perceptron Accuracy: {run_default()}%')
+if __name__== "__main__":
+    print(f'Multilayer Perceptron Accuracy: {run_default()}%')
 
 
 

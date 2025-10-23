@@ -31,5 +31,6 @@ def run_default():
     probs, priors = train(trainimg, trainlab) #probs is prob of each pixel being 1 for each number, priors is prob of each number in general
     return test(probs, priors, valimg, vallab)
 
-print(f'Naive Bayes Accuracy: {run_default()}%')
+if __name__== "__main__":
+    print(f'Naive Bayes Accuracy: {run_default()}%')
 

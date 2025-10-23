@@ -44,4 +44,5 @@ def run(k):
 def run_default():
     return run(3)
 
-print(f'K-Nearest Neighbor Accuracy: {run_default()}%')
+if __name__== "__main__":
+    print(f'K-Nearest Neighbor Accuracy: {run_default()}%')
