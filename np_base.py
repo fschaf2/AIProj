@@ -4,6 +4,9 @@ from PIL import Image
 import random
 import zipfile
 import re
+import matplotlib.pyplot as plt
+import seaborn as sns
+from sklearn.metrics import confusion_matrix
 
 def load_images():
     images, labels = [], []
@@ -54,4 +57,21 @@ def get_sets(valprop):
         vallab[val_perm]
     )
 
+def plot_cm(vallab, preds, model):
+    cm=100*confusion_matrix(vallab, preds, normalize='true')
+    plt.figure(figsize=(10,8))
+    ax=sns.heatmap(
+        cm,
+        annot=True,
+        fmt='.2f',
+        cmap='Blues',
+        xticklabels=np.arange(10),
+        yticklabels=np.arange(10)
+    )
+    for text in ax.texts:
+        text.set_text(text.get_text() + '%')
+    plt.title(f'Confusion Matrix for {model}', fontsize=16)
+    plt.ylabel('True Digit', fontsize=14)
+    plt.xlabel('Predicted Digit', fontsize=14)
+    plt.savefig(f'{model}_confmat.png', dpi=300)
     

@@ -2,6 +2,8 @@ import torch
 import torch.nn as nn
 import torch.optim as optim
 import torch.nn.functional as nnfun
+import numpy as np
+import np_base as base
 from torchvision import datasets, transforms
 from torch.utils.data import DataLoader
 
@@ -34,15 +36,21 @@ def train(model, train_loader, epochs, lossfunc, lr, mom):
             optimizer.step() #perform gradient descent on each tensor
 
 def test(model, test_loader):
+    print("testing now")
     correct=0
     total=0
+    true_list=[]
+    pred_list=[]
     with torch.no_grad(): #don't keep computation graph for gradients since we don't need them (not training)
         for images, labels in test_loader:
             outputs=model(images)
             _, predicted=outputs.max(1) #find index of predicted value
-            total+=labels.size(0) #add size of current batch to total
-            correct+=(predicted==labels).sum().item() #add number of correct predictions
-    correct_perc=100*(correct/total)
+            true_list.append(labels.cpu())
+            pred_list.append(predicted.cpu())
+    true_np=torch.cat(true_list).numpy()
+    pred_np=torch.cat(pred_list).numpy()
+    base.plot_cm(true_np, pred_np, type(model).__name__)
+    correct_perc=(np.mean(pred_np==true_np))*100
     return correct_perc
 
 def run(model, epochs, lossfunc, lr, mom):

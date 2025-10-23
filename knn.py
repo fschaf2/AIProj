@@ -38,6 +38,7 @@ def run(k):
             unique_labels=np.unique(cur_neigh_lab)
             lab_weights=np.array([weights[cur_neigh_lab==ul].sum() for ul in unique_labels]) #sum up weights for each neighbor digit
             preds[i+z]=unique_labels[np.argmax(lab_weights)] #make prediction and place it in overall prediction array
+    base.plot_cm(vallab, preds, "KNN")
     accuracy=np.mean(preds==vallab) * 100
     return accuracy
 
