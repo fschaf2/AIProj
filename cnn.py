@@ -17,10 +17,10 @@ class CNN(nn.Module):
 
     def forward(self, x):
         #go through the layers
-        x=nnfun.relu(self.conv1(x))
-        x=self.pool(x)
-        x=nnfun.relu(self.conv2(x))
-        x=self.pool(x)
+        x=nnfun.relu(self.conv1(x)) #result-28*28*32
+        x=self.pool(x) #14*14*32
+        x=nnfun.relu(self.conv2(x)) #14*14*64
+        x=self.pool(x) #7*7*64
         x=x.view(x.size(0), -1) #flatten
         return self.fc(x)
     
