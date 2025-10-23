@@ -1,15 +1,24 @@
 import np_base as base
 import numpy as np
 
+
+#K-Nearest Neighbor
+
+
+#TERMINOLOGY USED: trainimg, trainlab=array of training images, array of training labels
+#valimg, vallab=array of validation images, array of validation labels
+
+#calculates euclidian distance between 2 numpy arrays
 def eucl_dist(factor1, factor2):
     sq_1=np.sum(factor1**2, axis=1, keepdims=True) #calculate sum of factors squared for each image. keepdims here to enable broadcasting
     sq_2=np.sum(factor2**2, axis=1)
     dist = np.sqrt(sq_1 + sq_2 - 2 * factor1 @ factor2.T) #calculate euclidian distances using (a-b)^2=a^2+b^2-2ab for more efficient matrix operations
     return dist
 
-def run(k):
+
+#run with particular k nearest neighbors, and datasets
+def run(k, trainimg, trainlab, valimg, vallab):
     batch_size=1000
-    trainimg, trainlab, valimg, vallab = base.get_sets(0.2)
     ntrain=trainlab.shape[0]
     nval=vallab.shape[0]
     preds=np.zeros(nval, dtype=int) #preallocate prediction array
@@ -33,17 +42,25 @@ def run(k):
             cur_neigh=top_inds[z]
             cur_neigh_lab=trainlab[cur_neigh] #which numbers are the image's nearest neighbors
             cur_dists=top_dists[z]
-            weights=1/(cur_dists + 0.00001) #calculate weights from neighbors on the image
+            weights=1/(cur_dists + 0.00001) #calculate weights from neighbors on the image. never divide by 0 in case of identical image
 
             unique_labels=np.unique(cur_neigh_lab)
             lab_weights=np.array([weights[cur_neigh_lab==ul].sum() for ul in unique_labels]) #sum up weights for each neighbor digit
             preds[i+z]=unique_labels[np.argmax(lab_weights)] #make prediction and place it in overall prediction array
-    base.plot_cm(vallab, preds, "KNN")
+    base.plot_cm(vallab, preds, f'{k}_nearest_neigh')
     accuracy=np.mean(preds==vallab) * 100
     return accuracy
 
+
+#run with a k of 3
+#not currently used since we usually want to test multiple k, only here to stay consistent with the other models which have a run_default function
 def run_default():
-    return run(3)
+    trainimg, trainlab, valimg, vallab = base.get_sets(0.2) #get data
+    return run(3, trainimg, trainlab, valimg, vallab)
 
 if __name__== "__main__":
-    print(f'K-Nearest Neighbor Accuracy: {run_default()}%')
+    trainimg, trainlab, valimg, vallab = base.get_sets(0.2) #run with same sets to more accurately compare, since I found noise from different sets made a greater difference than changing k
+    print(f'1-Nearest Neighbor Accuracy: {run(1, trainimg, trainlab, valimg, vallab)}%')
+    print(f'3-Nearest Neighbor Accuracy: {run(3, trainimg, trainlab, valimg, vallab)}%')
+    print(f'5-Nearest Neighbor Accuracy: {run(5, trainimg, trainlab, valimg, vallab)}%')
+

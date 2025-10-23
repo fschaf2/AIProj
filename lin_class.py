@@ -1,6 +1,9 @@
 import torch.nn as nn
 import torch_base as tb
 
+#Linear Classifier
+
+
 class LinClass(nn.Module):
 
     def __init__(self):
@@ -13,7 +16,7 @@ class LinClass(nn.Module):
     
 
 
-def run_default():
+def run_default(): #Best settings I found
     return tb.run(LinClass(), 10, nn.MSELoss(), 0.01, 0)
 
 if __name__== "__main__":

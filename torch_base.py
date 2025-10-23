@@ -7,7 +7,10 @@ import np_base as base
 from torchvision import datasets, transforms
 from torch.utils.data import DataLoader
 
+#PyTorch Base - contains all basic functions used by PyTorch-based models in the project
 
+
+#Load data with Torchvision
 def load_data():
     transform_format=transforms.Compose([
         transforms.ToTensor(),
@@ -36,20 +39,17 @@ def train(model, train_loader, epochs, lossfunc, lr, mom):
             optimizer.step() #perform gradient descent on each tensor
 
 def test(model, test_loader):
-    print("testing now")
-    correct=0
-    total=0
-    true_list=[]
-    pred_list=[]
+    true_list=[] #list of true labels
+    pred_list=[] #list of predicted labels
     with torch.no_grad(): #don't keep computation graph for gradients since we don't need them (not training)
-        for images, labels in test_loader:
-            outputs=model(images)
+        for images, labels in test_loader: #load batch
+            outputs=model(images) #predict
             _, predicted=outputs.max(1) #find index of predicted value
             true_list.append(labels.cpu())
             pred_list.append(predicted.cpu())
-    true_np=torch.cat(true_list).numpy()
+    true_np=torch.cat(true_list).numpy() #put lists together into numpy arrays
     pred_np=torch.cat(pred_list).numpy()
-    base.plot_cm(true_np, pred_np, type(model).__name__)
+    base.plot_cm(true_np, pred_np, type(model).__name__) #plot confusion matrix
     correct_perc=(np.mean(pred_np==true_np))*100
     return correct_perc
 

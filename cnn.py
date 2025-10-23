@@ -2,6 +2,9 @@ import torch.nn as nn
 import torch_base as tb
 import torch.nn.functional as nnfun
 
+#Convolutional Neural Net
+
+
 class CNN(nn.Module):
 
     def __init__(self):
@@ -18,12 +21,12 @@ class CNN(nn.Module):
         x=self.pool(x)
         x=nnfun.relu(self.conv2(x))
         x=self.pool(x)
-        x=x.view(x.size(0), -1)
+        x=x.view(x.size(0), -1) #flatten
         return self.fc(x)
     
         
     
-def run_default():
+def run_default(): #Best settings I found
     return tb.run(CNN(), 10, nn.CrossEntropyLoss(), 0.01, 0.9) #recommended settings for highest accuracy I've found
 
 if __name__== "__main__":

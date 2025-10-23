@@ -1,6 +1,10 @@
 import torch.nn as nn
 import torch_base as tb
 
+#Multi-Layer Perceptron
+
+
+
 class MLP(nn.Module):
 
     def __init__(self):
@@ -18,7 +22,7 @@ class MLP(nn.Module):
         return self.layers(x) #do a pass through the layer
     
     
-def run_default():
+def run_default(): #Best settings I found
     return tb.run(MLP(), 10, nn.CrossEntropyLoss(), 0.01, 0)
 
 if __name__== "__main__":
